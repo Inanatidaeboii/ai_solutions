@@ -19,7 +19,7 @@ Repo นี้ใช้ฝึกพื้นฐาน AI และ Software Engi
 
 ## โครงสร้าง repo
 
-- `<problem>/`: หนึ่งโฟลเดอร์ต่อหนึ่งโจทย์ เช่น `heart_dicease/`
+- `<problem>/`: หนึ่งโฟลเดอร์ต่อหนึ่งโจทย์ เช่น `heart_disease/`
   - `data/`: ข้อมูลดิบจาก Kaggle ไม่ commit (อยู่ใน `.gitignore`)
   - `NOTES.md`: framing, hypothesis, การตัดสินใจ, ผลการทดลอง และบทเรียนของโจทย์นั้น
   - โครงสร้างโค้ดข้างใน (notebook, `src/`, tests) ผู้ใช้เป็นคนออกแบบ Claude ช่วย review แต่ไม่กำหนดให้
