@@ -1,0 +1,11 @@
+{
+    // Learning mode: no automatic suggestions; Ctrl+Space still opens them on demand
+    "editor.quickSuggestions": {
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
+    },
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.wordBasedSuggestions": "off",
+    "editor.inlineSuggest.enabled": false
+}
