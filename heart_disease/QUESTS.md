@@ -104,6 +104,8 @@ Implement metric ทางการเองด้วย numpy โดยไม�
 ### สถานะปัจจุบัน
 
 - `eda.py` เริ่มทำข้อ 2–3 ไปบางส่วนแล้ว: นับ target ที่หาย และเทียบ Age, BMI, General Health ระหว่างกลุ่มที่หายกับไม่หาย
+- `NOTES.md` หัวข้อ Framing เกือบครบ ยังค้าง: พิสูจน์ว่าหนึ่งแถวคืออะไร และใส่ link หน้า Evaluation
+- **ทำต่อ session หน้า:** ปิด TODO ของ Framing → เขียนคำทำนาย F2 ของ baseline ค่าคงที่ลง `NOTES.md` **ก่อน**รัน cell `y_pred` ใน `eda.py`
 - `data/` ไม่ได้ commit (อยู่ใน `.gitignore`) แต่ละเครื่องต้องโหลด `train.csv`, `test.csv`, `sample_submission.csv` จาก Kaggle เอง
 
 ---
@@ -136,3 +138,4 @@ Implement metric ทางการเองด้วย numpy โดยไม�
 | วันที่ | บอส | ผล | Summon ที่ใช้ | หมายเหตุ |
 |---|---|---|---|---|
 | 2026-11-24 | 1 | เริ่ม campaign | – | ออกแบบเกม, Boss 1 เปิด |
+| 2026-11-25 | 1 | Framing เกือบครบ: target, submission, F2 ✅ · หนึ่งแถว = อะไร ❌ ค้าง | S2 ×1 (ขอให้อธิบาย harmonic mean และ F-beta) | derive F1/Fβ จากนิยามได้เอง (ตายหลายรอบในพีชคณิต เพราะส่งก่อนรัน test) · แก้ misconception "β มาจาก class balance" ได้ · สับสน target กับ `Diagnosed Diabetes` 2 ครั้ง · `NOTES.md` Claude พิมพ์จากคำตอบในแชต |
