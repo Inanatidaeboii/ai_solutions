@@ -43,12 +43,13 @@
 | 6 | The Threshold Oracle | calibration, threshold จาก cost, error analysis | 🌫️ |
 | 7 | The Forge | reproducible pipeline, tests, code quality | 🌫️ |
 | ★ | The Tribunal | ปกป้องการตัดสินใจ + requirement เปลี่ยนกะทันหัน | 🌫️ |
-| DLC | Serve It | FastAPI, Docker, input validation, monitoring | 🌫️ ไม่บังคับ |
+| 8 | Serve It | FastAPI, Docker, input validation, logging, monitoring | 🌫️ |
 
 แต่ละบอสโยงกับ skill map ใน `../LEARNING_LOG.md` แบบนี้:
 - บอส 1–3 → ML พื้นฐาน: problem framing, metric, baseline, validation, leakage
 - บอส 4–6 → feature engineering, GBDT, tuning และ Evaluation
 - บอส 7 → Software Engineering
+- บอส 8 → MLOps
 - The Tribunal → System Design / CTO (บางส่วน)
 
 ---
@@ -181,7 +182,7 @@ Implement metric ทางการเองด้วย numpy โดยไม�
 
 **★ The Tribunal:** ปกป้องทุกการตัดสินใจแบบปิดโน้ต แล้วรับมือ requirement ที่เปลี่ยนกะทันหันภายในเวลาจำกัด โดยห้าม summon
 
-**DLC: Serve It:** เอาโมเดลขึ้นเป็น API มี input validation อยู่ใน container และมี monitoring
+**Boss 8: Serve It:** เอาโมเดลขึ้นเป็น API มี input validation อยู่ใน container มี logging และ monitoring (บังคับ: เป้าหมายคือพางานหนึ่งชิ้นไปจนถึง production ได้ด้วยตัวเอง)
 
 ---
 
@@ -193,3 +194,4 @@ Implement metric ทางการเองด้วย numpy โดยไม�
 | 2026-11-25 | 1 | Framing เกือบครบ: target, submission, F2 ✅ · หนึ่งแถว = อะไร ❌ ค้าง | S2 ×1 (ขอให้อธิบาย harmonic mean และ F-beta) | derive F1/Fβ จากนิยามได้เอง (ตายหลายรอบในพีชคณิต เพราะส่งก่อนรัน test) · แก้ misconception "β มาจาก class balance" ได้ · สับสน target กับ `Diagnosed Diabetes` 2 ครั้ง · `NOTES.md` Claude พิมพ์จากคำตอบในแชต |
 | 2026-11-25 | 1 | Review Framing (อีกเครื่อง): ข้อ 1 ยังไม่ผ่าน พบช่องโหว่ 4 ข้อ | – (review ไม่นับเป็น summon) | (1) target คือ "ประวัติ" แต่ use case เขียนเป็น "คัดกรองความเสี่ยง" สองอย่างยังไม่สอดคล้องกัน (2) claim "F-beta โกงด้วยการดันค่าเดียวไม่ได้" พิสูจน์กับ F1 แต่ยังไม่ได้พิสูจน์กับ F2 (3) test "นับค่าไม่ซ้ำของ Age/BMI" ใช้พิสูจน์หรือหักล้างว่า 1 แถว = 1 คน ไม่ได้ (4) `eda.py` ยังใช้ชื่อตัวแปร `yes_diabete` ซึ่งเป็นต้นเหตุของการสับสน target · คำถามที่เปิดไว้ให้ Boss 6: maximize F2 กับ minimize 4·FN + FP คือเรื่องเดียวกันไหม · Evaluation page ยังไม่มีใครตรวจกับต้นฉบับ (Claude เปิดหน้าไม่ได้ ได้ 404) |
 | 2026-11-25 | 1 (Cartographer) | เปิด sub-quest EDA · E1 ปลด 1/7 หมวด · ยังไม่มีโค้ด | S1 ×3 (เครื่องมือช่วยคิดคำถาม: ดูคอลัมน์ก่อน และเดินถอยหลังจากเส้นชัย · thought experiment แปลงสีรถกับ General Health เป็นตัวเลข · ตัวอย่างค้าน จำนวนลูกกับรหัสไปรษณีย์) | ตอนแรกคิดคำถามไม่ออก · แยก binary/non-binary ได้เอง ตอนแรกคิดว่า nominal กับ ordinal encode เหมือนกัน พอทำ thought experiment ก็หาคำตอบได้เอง (nominal → one-hot, ordinal → ตัวเลขตามลำดับ) · claim "ทุกคอลัมน์ตัวเลขวัดได้จริงเพราะ dtype เป็น float/int": ข้อสรุปถูก (Claude ตรวจแล้ว) แต่เหตุผลไม่พอ เพราะ dtype ≠ ความหมาย · เสนอ "ดูความต่อเนื่อง" ถูกทาง แต่ยังไม่ได้ทำให้วัดได้ · Claude เขียนค่าของ General Health ในแชตผิด แก้แล้ว ให้ดูค่าจริงจากข้อมูล · เครื่องนี้ตั้ง `.venv` และโหลด `data/` แล้ว |
+| 2026-11-26 | 1 (Cartographer) | ทำ profile ตาราง (dtype, nunique, % missing) ใน `eda.ipynb` · Finding 1: `Told High Cholesterol` หายเฉพาะคนที่ Checked = No (structural missing) → ตัดสินใจใช้ class `Unknown` แทน dropna (ตัวเต็งของ E5) · E3 ของ Finding 1 ผ่านแบบ guided ต้องมี rematch | S2 ×2 (keyword ของ pandas · อธิบาย ordinal/nominal ซ้ำ) · S1 ×4 (เกมทายความต่อเนื่อง · ชี้ให้ดูคอลัมน์ที่เป็นหลักฐานตรงกว่า · ใบ้ว่าตารางไขว้เดียวที่ไม่ซ่อน NaN ตอบได้ทั้งสองทิศ · ใบ้ให้ดู 5% เทียบกับ 1.9% ตอนตั้ง hypothesis) · **S4 ×1** (ผู้ใช้ขอให้ Claude เรียบเรียง Finding 1 ใน `NOTES.md` เพราะมึน ผู้ใช้เขียนเองบางส่วน) | รันก่อนทำนาย 3 ครั้ง แต่ครั้งที่ 4 (เช็กอีกทิศ) เขียนคำทำนายก่อนรันได้ และทายถูก · ลืม ordinal/nominal จากเมื่อวาน · ใช้ `value_counts("No")` และ `normalize="True"` โดยไม่รู้ว่า string ไปตกที่ `normalize` · เข้าใจ value of information ได้ (คำอธิบายไม่เปลี่ยนการตัดสินใจก็ไม่ต้องขุด) · ยังไม่ได้ตอบ: hypothesis "รู้ตัวอยู่แล้วเลยไม่ตรวจ" รอดไหม, `test.csv` จะจัดการแถวที่หายอย่างไร · **บทเรียนสำหรับ Claude:** ผู้ใช้มึนเมื่อมีคำถามเปิดค้างพร้อมกันเกิน 2 ข้อ ให้ถามทีละข้อจริง ๆ และพักข้อข้างทางไว้ใน open questions |
